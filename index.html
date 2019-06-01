@@ -28,6 +28,8 @@
                     <a @click="page = 'encode'" class="text-info p-0">encode, </a>
                     or
                     <a @click="page = 'decode'" class="text-info p-0">decode?</a>
+                    or
+                    <a @click="page = 'binary'" class="text-info p-0">to binary?</a>
                 </p>
 
             </h4>
@@ -83,7 +85,8 @@
             page: 'encode',
             titles: {
                 encode: "Encoding...",
-                decode: "Decoding..."
+                decode: "Decoding...",
+                binary: "Binary..."
             }
         },
         computed: {
@@ -94,7 +97,6 @@
                             let encodedURIComponent = encodeURIComponent(this.input);
                             let unescapedURIComponent = unescape(encodedURIComponent);
                             return btoa(unescapedURIComponent);
-
                         } catch (e) {
                             break;
                         }
@@ -108,6 +110,11 @@
                         } catch (e) {
                             break;
                         }
+
+                    case "binary":
+                        return this.input.split('').map(function (char) {
+                            return char.charCodeAt(0).toString(2);
+                        }).join(' ');
                 }
             },
 

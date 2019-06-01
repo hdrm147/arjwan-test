@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en" class="h-100">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <title>Soo</title>
+    <style>
+        body {
+            font-family: 'Raleway', sans-serif;
+        }
+    </style>
+</head>
+<body class="h-100 bg-light">
+
+<div id="app" class="container">
+
+    <div class="row justify-content-center">
+        <div class="col-md-8 m-3">
+            <h4 class="text-center mt-5">
+                <p claas="mt-5">You want to
+                    <a @click="page = 'encode'" class="text-info p-0">encode, </a>
+                    or
+                    <a @click="page = 'decode'" class="text-info p-0">decode?</a>
+                </p>
+
+            </h4>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-7 mt-3">
+            <h4>{{titles[page]}}</h4>
+            <div class="form-group">
+                <textarea name="text" type="text" v-model="input" class="form-control text"
+                          placeholder="Type here a text to encode" rows="2"></textarea>
+                <small class="text-muted float-right mt-2">char count {{input.length}}</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div v-if=" input !== '' " class="col-md-7 mt-2">
+            <div class="card">
+                <div class="card-body">
+                    <h5>{{ output }}</h5>
+                </div>
+            </div>
+            <small class="text-muted float-right mt-2">char count {{input.length}}</small>
+        </div>
+    </div>
+
+</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+        integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    let vue = new Vue({
+        el: "#app",
+        data: {
+            input: "",
+            page: 'encode',
+            titles: {
+                encode: "Encoding...",
+                decode: "Decoding..."
+            }
+        },
+        computed: {
+            output() {
+                switch (this.page) {
+                    case "encode":
+                        let encodedURIComponent = encodeURIComponent(this.input);
+                        let unescapedURIComponent = unescape(encodedURIComponent);
+                        return btoa(unescapedURIComponent);
+
+                    case "decode":
+                        let escapedURIComponent = escape(this.input);
+                        let decodedURIComponent = decodeURIComponent(escapedURIComponent);
+                        return atob(decodedURIComponent);
+                }
+            },
+
+        },
+        watch: {
+            page() {
+                this.input = '';
+            }
+        }
+    })
+</script>
+
+</body>
+</html>

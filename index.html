@@ -85,14 +85,24 @@
             output() {
                 switch (this.page) {
                     case "encode":
-                        let encodedURIComponent = encodeURIComponent(this.input);
-                        let unescapedURIComponent = unescape(encodedURIComponent);
-                        return btoa(unescapedURIComponent);
+                        try {
+                            let encodedURIComponent = encodeURIComponent(this.input);
+                            let unescapedURIComponent = unescape(encodedURIComponent);
+                            return btoa(unescapedURIComponent);
+
+                        } catch (e) {
+                            break;
+                        }
 
                     case "decode":
-                        let escapedURIComponent = escape(this.input);
-                        let decodedURIComponent = decodeURIComponent(escapedURIComponent);
-                        return atob(decodedURIComponent);
+
+                        try {
+                            let escapedURIComponent = escape(this.input);
+                            let decodedURIComponent = decodeURIComponent(escapedURIComponent);
+                            return atob(decodedURIComponent);
+                        } catch (e) {
+                            break;
+                        }
                 }
             },
 

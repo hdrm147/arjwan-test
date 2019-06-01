@@ -38,7 +38,7 @@
         <div class="col-md-7 mt-3">
             <h4>{{titles[page]}}</h4>
             <div class="form-group">
-                <textarea name="text" type="text" v-model="input" class="form-control text"
+                <textarea name="text" type="text" v-model-android="input" class="form-control text"
                           placeholder="Type here a text to encode" rows="2"></textarea>
                 <small class="text-muted float-right mt-2">char count {{input.length}}</small>
             </div>
@@ -71,6 +71,11 @@
         crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script>
+    Vue.directive('model-android', {
+        bind: function (el, binding, vnode) {
+            el.oninput = () => (vnode.context[binding.expression] = el.value)
+        }
+    });
     let vue = new Vue({
         el: "#app",
         data: {
